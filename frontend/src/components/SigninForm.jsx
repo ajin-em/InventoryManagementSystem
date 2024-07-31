@@ -14,7 +14,7 @@ const SigninForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8000/api/signin/', formData);
+            const response = await axios.post('https://vercel.com/ajin-e-ms-projects/inventory-management-system-backend/api/signin/', formData);
             localStorage.setItem('access_token', response.data.access);
             localStorage.setItem('refresh_token', response.data.refresh);
             navigate('/dashboard');

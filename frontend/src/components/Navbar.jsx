@@ -9,7 +9,7 @@ const Navbar = ({ toggleSidebar }) => {
             const token = localStorage.getItem('access_token');
             if (token) {
                 try {
-                    const response = await axios.get('http://localhost:8000/api/me/', {
+                    const response = await axios.get('https://vercel.com/ajin-e-ms-projects/inventory-management-system-backend/api/me/', {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },

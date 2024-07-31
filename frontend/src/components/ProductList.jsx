@@ -54,7 +54,7 @@ const ProductList = () => {
   const handleProductUpdated = async (updatedProduct) => {
     try {
       const token = localStorage.getItem('access_token');
-      const response = await axios.get('http://localhost:8000/api/products/', {
+      const response = await axios.get('https://vercel.com/ajin-e-ms-projects/inventory-management-system-backend/api/products/', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
