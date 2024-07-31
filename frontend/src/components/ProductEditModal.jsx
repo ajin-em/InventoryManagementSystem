@@ -39,7 +39,7 @@ const ProductEditModal = ({ product, onClose, onProductUpdated }) => {
       formData.append('stock', productData.stock);
 
       const response = await axios.put(
-        `https://vercel.com/ajin-e-ms-projects/inventory-management-system-backend/api/products/${product.id}/`,
+        `https://inventory-management-system-backend-nine.vercel.app/api/products/${product.id}/`,
         formData,
         {
           headers: {
