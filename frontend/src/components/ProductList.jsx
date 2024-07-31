@@ -35,7 +35,7 @@ const ProductList = () => {
   const handleDelete = async (productId) => {
     try {
       const token = localStorage.getItem('access_token');
-      await axios.delete(`https://inventory-management-system-backend-nine.vercel.app/${productId}/`, {
+      await axios.delete(`http://127.0.0.1:8000/${productId}/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

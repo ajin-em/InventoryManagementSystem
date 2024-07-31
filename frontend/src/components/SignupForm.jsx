@@ -27,7 +27,7 @@ const SignupForm = () => {
         }
 
         try {
-            const response = await axios.post('https://inventory-management-system-backend-nine.vercel.app/api/signup/', {
+            const response = await axios.post('http://127.0.0.1:8000/api/signup/', {
                 username: formData.username,
                 email: formData.email,
                 password: formData.password,

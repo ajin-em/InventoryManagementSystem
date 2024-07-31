@@ -42,7 +42,7 @@ const ProductForm = ({ onClose }) => {
         formData.append('stock', stock);
       
         try {
-          await axios.post('https://inventory-management-system-backend-nine.vercel.app/api/products/', formData, {
+          await axios.post('http://127.0.0.1:8000/api/products/', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
               'Authorization': `Bearer ${accessToken}`,
