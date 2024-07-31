@@ -9,7 +9,7 @@ const Sidebar = ({ isVisible }) => {
                     <Link to="/products/new" className="block p-2 text-blue-600 hover:bg-gray-300">Create Products</Link>
                 </li>
                 <li>
-                    <Link to="/products/" className="block p-2 text-blue-600 hover:bg-gray-300">View Product</Link>
+                    <Link to="/products" className="block p-2 text-blue-600 hover:bg-gray-300">View Products</Link>
                 </li>
             </ul>
         </aside>

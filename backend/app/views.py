@@ -15,7 +15,9 @@ class ProductView(generics.ListCreateAPIView):
     def get_serializer_context(self):
         return {'request': self.request}
 
-class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
+
+
+class ProductUpdateView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     permission_classes = [IsAuthenticated]
 
