@@ -38,30 +38,27 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
     'app',
     'user',
 ]
-# CORS_ALLOW_ALL_ORIGINS = True 
+CORS_ALLOW_ALL_ORIGINS = True 
 # CORS_ALLOWED_ORIGINS = [
 #     'https://inventory-management-system-steel.vercel.app/',
 #     'http://localhost:5173',
 # ]
 
-CORS_ORIGIN_WHITELIST = (
 
-    'https://inventory-management-system-steel.vercel.app/',
-    'http://localhost:5173',
 
-)
+CSRF_TRUSTED_ORIGINS = ['*']
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -110,9 +107,9 @@ SIMPLE_JWT = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
