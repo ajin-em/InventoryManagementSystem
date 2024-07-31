@@ -20,8 +20,12 @@
         "dest": "/media/$1"
       },
       {
+        "src": "/api/(.*)",
+        "dest": "/MyInventory/wsgi.py"
+      },
+      {
         "src": "/(.*)",
-        "dest": "MyInventory/wsgi.py"
+        "dest": "/MyInventory/wsgi.py"
       }
     ]
   }
