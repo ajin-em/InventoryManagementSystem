@@ -13,7 +13,9 @@ class Product(models.Model):
     IsFavourite = models.BooleanField(default=False)
     Active = models.BooleanField(default=True)
     HSNCode = models.CharField(max_length=255, blank=True, null=True)
-    TotalStock = models.DecimalField(default=0.00, max_digits=20, decimal_places=8, blank=True, null=True)
+    variant = models.CharField(max_length=255)
+    subvariant = models.CharField(max_length=255)
+    stock = models.DecimalField(default=0.00, max_digits=20, decimal_places=8)
 
     class Meta:
         db_table = "products_product"
@@ -21,25 +23,3 @@ class Product(models.Model):
         verbose_name_plural = "products"
         unique_together = (("ProductCode", "ProductID"),)
         ordering = ("-CreatedDate", "ProductID")
-
-class Variant(models.Model):
-    product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-    options = models.JSONField()  
-
-    class Meta:
-        db_table = "products_variant"
-        verbose_name = "variant"
-        verbose_name_plural = "variants"
-        unique_together = (("product", "name"),)
-
-class SubVariant(models.Model):
-    variant = models.ForeignKey(Variant, related_name='subvariants', on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-    stock = models.DecimalField(default=0.00, max_digits=20, decimal_places=8)
-
-    class Meta:
-        db_table = "products_subvariant"
-        verbose_name = "subvariant"
-        verbose_name_plural = "subvariants"
-        unique_together = (("variant", "name"),)

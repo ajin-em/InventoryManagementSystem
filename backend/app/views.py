@@ -1,9 +1,9 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from .models import Product, SubVariant
-from .serializers import ProductSerializer, ProductCreateSerializer, StockSerializer
+from .models import Product
+from .serializers import ProductSerializer, ProductCreateSerializer, ProductUpdateSerializer
 
-class ProductListView(generics.ListCreateAPIView):
+class ProductView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     permission_classes = [IsAuthenticated]
 
@@ -12,27 +12,14 @@ class ProductListView(generics.ListCreateAPIView):
             return ProductCreateSerializer
         return ProductSerializer
 
+    def get_serializer_context(self):
+        return {'request': self.request}
+
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
 
-class AddStockView(generics.UpdateAPIView):
-    queryset = SubVariant.objects.all()
-    serializer_class = StockSerializer
-    permission_classes = [IsAuthenticated]
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        instance.stock += self.request.data.get('stock', 0)
-        instance.save()
-
-class RemoveStockView(generics.UpdateAPIView):
-    queryset = SubVariant.objects.all()
-    serializer_class = StockSerializer
-    permission_classes = [IsAuthenticated]
-
-    def perform_update(self, serializer):
-        instance = serializer.save()
-        instance.stock -= self.request.data.get('stock', 0)
-        instance.save()
+    def get_serializer_class(self):
+        if self.request.method in ['PUT', 'PATCH']:
+            return ProductUpdateSerializer
+        return ProductSerializer
