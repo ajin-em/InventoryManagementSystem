@@ -52,8 +52,8 @@ INSTALLED_APPS = [
 ]
 # CORS_ALLOW_ALL_ORIGINS = True 
 CORS_ALLOWED_ORIGINS = [
+    'https://inventory-management-system-steel.vercel.app/',
     'http://localhost:5173',
-    # Add other origins if needed
 ]
 
 # LOGGING = {
