@@ -56,6 +56,21 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = [
+    'content-type',
+]
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS',
+]
+
 # LOGGING = {
 #     'version': 1,
 #     'disable_existing_loggers': False,
