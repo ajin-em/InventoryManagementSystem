@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '../utils/spinner.css'
+import '../utils/spinner.css';
 
 const SignupForm = () => {
     const [formData, setFormData] = useState({ username: '', email: '', password: '', password2: '' });
@@ -42,12 +42,16 @@ const SignupForm = () => {
             }, {
                 headers: { 'Content-Type': 'application/json' }
             });
+
             toast.success('Signup successful! Redirecting...');
+            
             setTimeout(() => {
                 setIsLoading(false);
                 navigate('/signin');
-            }, 3000); 
+                console.log('Navigating to /signin');
+            }, 2000);
         } catch (error) {
+            console.error('Signup error:', error);
             setErrors(error.response?.data || { non_field_errors: 'An unexpected error occurred' });
             toast.error('Signup failed. Please try again.');
             setIsLoading(false);

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import ProductEditModal from './ProductEditModal';
-import Layout from './Layout.js';
+import Layout from './Layout';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -9,7 +10,6 @@ const ProductList = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // Fetch products from the backend
     const fetchProducts = async () => {
       try {
         const token = localStorage.getItem('access_token');
@@ -20,6 +20,7 @@ const ProductList = () => {
         });
         setProducts(response.data);
       } catch (error) {
+        toast.error('Error fetching products.');
         console.error('Error fetching products:', error);
       }
     };
@@ -35,13 +36,15 @@ const ProductList = () => {
   const handleDelete = async (productId) => {
     try {
       const token = localStorage.getItem('access_token');
-      await axios.delete(`https://inventory-management-system-backend-nine.vercel.app/${productId}/`, {
+      await axios.delete(`https://inventory-management-system-backend-nine.vercel.app/api/products/${productId}/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       setProducts(products.filter((product) => product.id !== productId));
+      toast.success('Product deleted successfully.');
     } catch (error) {
+      toast.error('Error deleting product.');
       console.error('Error deleting product:', error);
     }
   };
@@ -51,7 +54,7 @@ const ProductList = () => {
     setSelectedProduct(null);
   };
 
-  const handleProductUpdated = async (updatedProduct) => {
+  const handleProductUpdated = async () => {
     try {
       const token = localStorage.getItem('access_token');
       const response = await axios.get('https://inventory-management-system-backend-nine.vercel.app/api/products/', {
@@ -59,8 +62,10 @@ const ProductList = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setProducts(response.data); // Update the products list
+      setProducts(response.data);
+      toast.success('Product updated successfully.');
     } catch (error) {
+      toast.error('Error fetching products.');
       console.error('Error fetching products:', error);
     }
   };

@@ -50,7 +50,7 @@ const ProductForm = ({ onClose }) => {
                 },
             });
             toast.success('Product created successfully');
-            onClose(); // Call the onClose function to hide the form
+            onClose();
         } catch (error) {
             if (error.response && error.response.data) {
                 if (error.response.data.ProductID) {

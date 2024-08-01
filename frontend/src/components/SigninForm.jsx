@@ -26,7 +26,7 @@ const SigninForm = () => {
             setTimeout(() => {
                 setIsLoading(false);
                 navigate('/dashboard');
-            }, 3000); // Redirect after 3 seconds
+            }, 2000); 
         } catch (error) {
             setErrors(error.response?.data || {});
             toast.error('Signin failed. Please try again.');
