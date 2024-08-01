@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Layout from './Layout.js';
+import Layout from './Layout';
 
 const ProductForm = ({ onClose }) => {
     const [productID, setProductID] = useState('');
