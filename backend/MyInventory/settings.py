@@ -50,6 +50,10 @@ INSTALLED_APPS = [
     'app',
     'user',
 ]
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:5173','https://inventory-management-system-steel.vercel.app',
+]
+
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
