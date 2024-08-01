@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import ProductEditModal from './ProductEditModal';
-import Layout from './Layout.js';
+import Layout from './Layout';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
