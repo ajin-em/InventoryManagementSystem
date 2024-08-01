@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -114,6 +114,9 @@ const SignupForm = () => {
                     Sign Up
                 </button>
             </form>
+            <div className="mt-4 text-center">
+                Already have an account? <Link to="/signin" className="text-blue-500 hover:underline">Sign In</Link>
+            </div>
         </div>
     );
 };

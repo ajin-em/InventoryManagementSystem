@@ -4,7 +4,8 @@ import ProductList from './components/ProductList';
 import ProductForm from './components/ProductForm';
 import Dashboard from './components/DashBoard';
 import PrivateRoute from './utils/PrivateRoute';
-import AuthSwitcher from './utils/AuthSwitcher';
+import SignInForm from './components/SigninForm.jsx'; 
+import SignUpForm from './components/SignupForm.jsx';
 import { AuthProvider } from './utils/AuthContext.jsx';
 
 const App = () => {
@@ -13,9 +14,8 @@ const App = () => {
             <Router>
                 <Routes>
                     {/* Public Routes */}
-                    <Route path="/" element={<AuthSwitcher />} />
-                    <Route path="/signin" element={<AuthSwitcher />} />
-                    <Route path="/signup" element={<AuthSwitcher />} />
+                    <Route path="/" element={<SignUpForm />} />
+                    <Route path="/signin" element={<SignInForm />} />
 
                     {/* Protected Routes */}
                     <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />

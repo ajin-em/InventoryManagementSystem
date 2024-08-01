@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '../utils/spinner.css'
+import '../utils/spinner.css';
 
 const SigninForm = () => {
     const [formData, setFormData] = useState({ username: '', password: '' });
@@ -69,6 +69,9 @@ const SigninForm = () => {
                     Sign In
                 </button>
             </form>
+            <div className="mt-4 text-center">
+                Don't have an account? <Link to="/" className="text-blue-500 hover:underline">Sign Up</Link>
+            </div>
         </div>
     );
 };
