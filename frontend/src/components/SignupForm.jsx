@@ -58,7 +58,7 @@ const SignupForm = () => {
         <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
             <ToastContainer />
             <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
-            {isLoading && <div className="text-center mb-4"><div className="spinner"></div></div>}
+            {isLoading && <div className="flex justify-center items-center mb-4"><div className="spinner"></div></div>}
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <input 
