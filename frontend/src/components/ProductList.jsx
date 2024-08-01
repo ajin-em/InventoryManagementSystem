@@ -13,7 +13,7 @@ const ProductList = () => {
     const fetchProducts = async () => {
       try {
         const token = localStorage.getItem('access_token');
-        const response = await axios.get('http://localhost:8000/api/products/', {
+        const response = await axios.get('https://inventory-management-system-backend-nine.vercel.app/api/products/', {
           headers: {
             Authorization: `Bearer ${token}`,
           },

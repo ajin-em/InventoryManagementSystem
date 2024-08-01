@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; 
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SigninForm = () => {
     const [formData, setFormData] = useState({ username: '', password: '' });
@@ -17,14 +19,17 @@ const SigninForm = () => {
             const response = await axios.post('https://inventory-management-system-backend-nine.vercel.app/api/signin/', formData);
             localStorage.setItem('access_token', response.data.access);
             localStorage.setItem('refresh_token', response.data.refresh);
-            navigate('/dashboard');
+            toast.success('Signin successful! Redirecting...');
+            setTimeout(() => navigate('/dashboard'), 3000); // Redirect after 3 seconds
         } catch (error) {
             setErrors(error.response?.data || {});
+            toast.error('Signin failed. Please try again.');
         }
     };
 
     return (
         <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+            <ToastContainer />
             <h2 className="text-2xl font-semibold mb-6 text-center">Sign In</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
@@ -38,7 +43,6 @@ const SigninForm = () => {
                     />
                     {errors.username && <div className="text-red-500 text-sm mt-1">{errors.username}</div>}
                 </div>
-                
                 <div className="mb-4">
                     <input 
                         type="password" 
@@ -50,15 +54,12 @@ const SigninForm = () => {
                     />
                     {errors.password && <div className="text-red-500 text-sm mt-1">{errors.password}</div>}
                 </div>
-                
                 <button 
                     type="submit" 
                     className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
                 >
                     Sign In
                 </button>
-                
-                {errors.non_field_errors && <div className="text-red-500 text-sm mt-4 text-center">{errors.non_field_errors}</div>}
             </form>
         </div>
     );

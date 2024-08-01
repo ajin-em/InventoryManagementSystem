@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = ({ toggleSidebar }) => {
     const [username, setUsername] = useState('');
@@ -19,7 +21,10 @@ const Navbar = ({ toggleSidebar }) => {
                     console.error('Error fetching user data:', error);
                     localStorage.removeItem('access_token');
                     localStorage.removeItem('refresh_token');
-                    window.location.href = '/signin'; // Redirect on error
+                    toast.error('Session expired. Redirecting to sign in...');
+                    setTimeout(() => {
+                        window.location.href = '/signin';
+                    }, 3000);
                 }
             } else {
                 window.location.href = '/signin'; // Redirect if no token
@@ -31,6 +36,7 @@ const Navbar = ({ toggleSidebar }) => {
 
     return (
         <nav className="bg-gray-800 text-white p-4 flex gap-4 justify-end items-center">
+            <ToastContainer />
             <button
                 className="text-white md:hidden"
                 onClick={toggleSidebar}

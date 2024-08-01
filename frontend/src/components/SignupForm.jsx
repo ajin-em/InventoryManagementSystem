@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; 
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignupForm = () => {
     const [formData, setFormData] = useState({ username: '', email: '', password: '', password2: '' });
@@ -23,32 +25,30 @@ const SignupForm = () => {
         const formErrors = validateForm();
         if (Object.keys(formErrors).length > 0) {
             setErrors(formErrors);
+            toast.error('Please correct the highlighted errors.');
             return;
         }
 
         try {
-            const response = await axios.post('https://inventory-management-system-backend-nine.vercel.app/api/signup/', {
+            await axios.post('https://inventory-management-system-backend-nine.vercel.app/api/signup/', {
                 username: formData.username,
                 email: formData.email,
                 password: formData.password,
                 password2: formData.password2
             }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
+                headers: { 'Content-Type': 'application/json' }
             });
-            navigate('/signin'); // Redirect on successful signup
+            toast.success('Signup successful! Redirecting...');
+            setTimeout(() => navigate('/signin'), 3000); // Redirect after 3 seconds
         } catch (error) {
-            if (error.response) {
-                setErrors(error.response.data); // Update errors from server response
-            } else {
-                setErrors({ non_field_errors: 'An unexpected error occurred' }); // Generic error message
-            }
+            setErrors(error.response?.data || { non_field_errors: 'An unexpected error occurred' });
+            toast.error('Signup failed. Please try again.');
         }
     };
 
     return (
         <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+            <ToastContainer />
             <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
@@ -62,7 +62,6 @@ const SignupForm = () => {
                     />
                     {errors.username && <div className="text-red-500 text-sm mt-1">{errors.username}</div>}
                 </div>
-                
                 <div className="mb-4">
                     <input 
                         type="email" 
@@ -74,7 +73,6 @@ const SignupForm = () => {
                     />
                     {errors.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
                 </div>
-                
                 <div className="mb-4">
                     <input 
                         type="password" 
@@ -85,7 +83,6 @@ const SignupForm = () => {
                         className="w-full p-2 border border-gray-300 rounded-md"
                     />
                 </div>
-                
                 <div className="mb-4">
                     <input 
                         type="password" 
@@ -97,15 +94,12 @@ const SignupForm = () => {
                     />
                     {errors.password2 && <div className="text-red-500 text-sm mt-1">{errors.password2}</div>}
                 </div>
-                
                 <button 
                     type="submit" 
                     className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600"
                 >
                     Sign Up
                 </button>
-                
-                {errors.non_field_errors && <div className="text-red-500 text-sm mt-4 text-center">{errors.non_field_errors}</div>}
             </form>
         </div>
     );

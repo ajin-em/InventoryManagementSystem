@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductEditModal = ({ product, onClose, onProductUpdated }) => {
   const [productData, setProductData] = useState({ ...product });
@@ -38,7 +40,7 @@ const ProductEditModal = ({ product, onClose, onProductUpdated }) => {
       formData.append('subvariant', productData.subvariant);
       formData.append('stock', productData.stock);
 
-      const response = await axios.put(
+      await axios.put(
         `https://inventory-management-system-backend-nine.vercel.app/${product.id}/`,
         formData,
         {
@@ -48,15 +50,19 @@ const ProductEditModal = ({ product, onClose, onProductUpdated }) => {
           },
         }
       );
-      onProductUpdated(response.data); // Notify parent component about the update
+      toast.success('Product updated successfully');
+      onProductUpdated(productData); // Notify parent component about the update
+      onClose(); // Close the modal
       navigate('/products'); // Redirect to the ProductList component
     } catch (error) {
       console.error('Error updating product:', error);
+      toast.error('Error updating product');
     }
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 p-4">
+      <ToastContainer />
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
         <h2 className="text-2xl font-bold mb-4">Edit Product</h2>
         <form onSubmit={handleSubmit}>

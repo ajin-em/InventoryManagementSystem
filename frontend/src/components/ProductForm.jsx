@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Layout from './Layout.js';
 
 const ProductForm = ({ onClose }) => {
@@ -17,55 +19,56 @@ const ProductForm = ({ onClose }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-      
-        // Check if Product ID is greater than 0
+
         if (productID <= 0) {
-          setProductIDError('Product ID must be greater than 0');
-          return;
+            setProductIDError('Product ID must be greater than 0');
+            toast.error('Product ID must be greater than 0');
+            return;
         } else {
-          setProductIDError('');
+            setProductIDError('');
         }
-      
+
         const accessToken = localStorage.getItem('access_token');
-      
         const formData = new FormData();
         formData.append('ProductID', productID);
         formData.append('ProductCode', productCode);
         formData.append('ProductName', productName);
         if (productImage) {
-          formData.append('ProductImage', productImage);
+            formData.append('ProductImage', productImage);
         }
         formData.append('IsFavourite', isFavourite);
         formData.append('HSNCode', hsnCode);
         formData.append('variant', variant);
         formData.append('subvariant', subvariant);
         formData.append('stock', stock);
-      
+
         try {
-          await axios.post('https://inventory-management-system-backend-nine.vercel.app/api/products/', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization': `Bearer ${accessToken}`,
-            },
-          });
-          alert('Product created successfully');
-          onClose(); // Call the onClose function to hide the form
+            await axios.post('https://inventory-management-system-backend-nine.vercel.app/api/products/', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+            });
+            toast.success('Product created successfully');
+            onClose(); // Call the onClose function to hide the form
         } catch (error) {
-          if (error.response && error.response.data) {
-            if (error.response.data.ProductID) {
-              setProductIDError(error.response.data.ProductID[0]);
+            if (error.response && error.response.data) {
+                if (error.response.data.ProductID) {
+                    setProductIDError(error.response.data.ProductID[0]);
+                } else {
+                    setErrorMessages(error.response.data);
+                }
             } else {
-              setErrorMessages(error.response.data);
+                toast.error('Error creating product');
+                console.error('Error creating product:', error);
             }
-          } else {
-            console.error('Error creating product:', error);
-          }
         }
-      };
+    };
 
     return (
         <Layout>
             <div className="max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg h-[600px] overflow-y-auto">
+                <ToastContainer />
                 <h2 className="text-2xl font-bold mb-6 text-center">Create Product</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
@@ -73,16 +76,7 @@ const ProductForm = ({ onClose }) => {
                         <input
                             type="number"
                             value={productID}
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                if (value > 0) {
-                                    setProductID(value);
-                                    setProductIDError('');
-                                } else {
-                                    setProductID('');
-                                    setProductIDError('Product ID must be greater than 0');
-                                }
-                            }}
+                            onChange={(e) => setProductID(e.target.value)}
                             required
                             className="w-full p-2 border border-gray-300 rounded-md"
                         />
