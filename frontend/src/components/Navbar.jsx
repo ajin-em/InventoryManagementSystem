@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import { useAuth } from '../utils/AuthContext';
+import 'react-toastify/dist/ReactToastify.css';
+import '../utils/spinner.css';
 
 const Navbar = ({ toggleSidebar }) => {
     const [username, setUsername] = useState('');
+    const { signout } = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -18,19 +25,27 @@ const Navbar = ({ toggleSidebar }) => {
                 } catch (error) {
                     console.error('Error fetching user data:', error);
                     localStorage.removeItem('access_token');
-                    localStorage.removeItem('refresh_token');
-                    window.location.href = '/signin'; // Redirect on error
+                    toast.error('Session expired. Redirecting to sign in...');
+                    setTimeout(() => {
+                        navigate('/signin');
+                    }, 3000);
                 }
             } else {
-                window.location.href = '/signin'; // Redirect if no token
+                navigate('/signin');
             }
         };
 
         fetchUserData();
-    }, []);
+    }, [navigate]);
+
+    const handleLogout = () => {
+        signout(); 
+        navigate('/signin'); 
+    };
 
     return (
         <nav className="bg-gray-800 text-white p-4 flex gap-4 justify-end items-center">
+            <ToastContainer />
             <button
                 className="text-white md:hidden"
                 onClick={toggleSidebar}
@@ -40,7 +55,7 @@ const Navbar = ({ toggleSidebar }) => {
             <div className="text-lg font-semibold">
                 {username}
             </div>
-            <button className="btn btn-logout" onClick={() => window.location.href = '/signin'}>Sign Out</button>
+            <button className="btn btn-logout" onClick={handleLogout}>Sign Out</button>
         </nav>
     );
 };
