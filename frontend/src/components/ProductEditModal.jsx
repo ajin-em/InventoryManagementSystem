@@ -16,7 +16,7 @@ const ProductEditModal = ({ product, onClose, onProductUpdated }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProductData({ ...productData, [name]: value });
+    setProductData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (e) => {
@@ -36,12 +36,12 @@ const ProductEditModal = ({ product, onClose, onProductUpdated }) => {
       }
       formData.append('IsFavourite', productData.IsFavourite);
       formData.append('HSNCode', productData.HSNCode);
-      formData.append('variant', productData.variant);
-      formData.append('subvariant', productData.subvariant);
+      formData.append('variant', productData.variant); // Adjust as needed
+      formData.append('subvariant', productData.subvariant); // Adjust as needed
       formData.append('stock', productData.stock);
 
       await axios.put(
-        `https://inventory-management-system-backend-nine.vercel.app/${product.id}/`,
+        `https://inventory-management-system-backend-nine.vercel.app/products/${product.id}/`, // Ensure correct endpoint
         formData,
         {
           headers: {

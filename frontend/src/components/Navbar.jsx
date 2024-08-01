@@ -29,7 +29,7 @@ const Navbar = ({ toggleSidebar }) => {
                     toast.error('Session expired. Redirecting to sign in...');
                     setTimeout(() => {
                         navigate('/signin');
-                    }, 3000);
+                    }, 2000);
                 }
             } else {
                 navigate('/signin');
