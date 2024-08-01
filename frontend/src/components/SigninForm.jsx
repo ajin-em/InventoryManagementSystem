@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../utils/spinner.css'
 
 const SigninForm = () => {
     const [formData, setFormData] = useState({ username: '', password: '' });
     const [errors, setErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -15,15 +17,20 @@ const SigninForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
         try {
             const response = await axios.post('https://inventory-management-system-backend-nine.vercel.app/api/signin/', formData);
             localStorage.setItem('access_token', response.data.access);
             localStorage.setItem('refresh_token', response.data.refresh);
             toast.success('Signin successful! Redirecting...');
-            setTimeout(() => navigate('/dashboard'), 3000); // Redirect after 3 seconds
+            setTimeout(() => {
+                setIsLoading(false);
+                navigate('/dashboard');
+            }, 3000); // Redirect after 3 seconds
         } catch (error) {
             setErrors(error.response?.data || {});
             toast.error('Signin failed. Please try again.');
+            setIsLoading(false);
         }
     };
 
@@ -31,6 +38,7 @@ const SigninForm = () => {
         <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
             <ToastContainer />
             <h2 className="text-2xl font-semibold mb-6 text-center">Sign In</h2>
+            {isLoading && <div className="text-center mb-4"><div className="spinner"></div></div>}
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <input 

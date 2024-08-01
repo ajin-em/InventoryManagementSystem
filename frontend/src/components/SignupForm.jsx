@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../utils/spinner.css'
 
 const SignupForm = () => {
     const [formData, setFormData] = useState({ username: '', email: '', password: '', password2: '' });
     const [errors, setErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -29,6 +31,8 @@ const SignupForm = () => {
             return;
         }
 
+        setIsLoading(true);
+
         try {
             await axios.post('https://inventory-management-system-backend-nine.vercel.app/api/signup/', {
                 username: formData.username,
@@ -39,10 +43,14 @@ const SignupForm = () => {
                 headers: { 'Content-Type': 'application/json' }
             });
             toast.success('Signup successful! Redirecting...');
-            setTimeout(() => navigate('/signin'), 3000); // Redirect after 3 seconds
+            setTimeout(() => {
+                setIsLoading(false);
+                navigate('/signin');
+            }, 3000); 
         } catch (error) {
             setErrors(error.response?.data || { non_field_errors: 'An unexpected error occurred' });
             toast.error('Signup failed. Please try again.');
+            setIsLoading(false);
         }
     };
 
@@ -50,6 +58,7 @@ const SignupForm = () => {
         <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
             <ToastContainer />
             <h2 className="text-2xl font-semibold mb-6 text-center">Sign Up</h2>
+            {isLoading && <div className="text-center mb-4"><div className="spinner"></div></div>}
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                     <input 
