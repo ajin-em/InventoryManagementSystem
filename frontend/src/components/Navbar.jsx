@@ -9,7 +9,7 @@ const Navbar = ({ toggleSidebar }) => {
             const token = localStorage.getItem('access_token');
             if (token) {
                 try {
-                    const response = await axios.get('http://127.0.0.1:8000/api/me/', {
+                    const response = await axios.get('https://inventory-management-system-backend-nine.vercel.app/api/me/', {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
