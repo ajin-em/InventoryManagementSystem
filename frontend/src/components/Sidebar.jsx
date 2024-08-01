@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 const Sidebar = ({ isVisible }) => {
     return (
         <aside
-            className={`bg-gray-200 w-64 fixed h-full p-4 transition-transform duration-300 ease-in-out ${
+            className={`bg-gray-200 w-64 fixed h-full p-4 transition-transform duration-300 ease-in-out transform ${
                 isVisible ? 'translate-x-0' : '-translate-x-full'
-            } md:translate-x-0 md:block`}
+            } md:translate-x-0 md:relative md:block`}
         >
             <ul className="space-y-2">
                 <li>
