@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import { useAuth } from '../utils/AuthContext';
+import { useAuth } from './AuthContext';
 import 'react-toastify/dist/ReactToastify.css';
 import '../utils/spinner.css';
 
@@ -39,8 +39,8 @@ const Navbar = ({ toggleSidebar }) => {
     }, [navigate]);
 
     const handleLogout = () => {
-        signout(); 
-        navigate('/signin'); 
+        signout(); // Clear the authentication state
+        navigate('/signin'); // Navigate to the sign-in page
     };
 
     return (
