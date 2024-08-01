@@ -89,10 +89,10 @@ You can access the hosted application [here](https://inventory-management-system
    npm run dev
 
 ## Running the Application
-  -The backend server will be running on http://localhost:8000.
-  -The frontend server will be running on http://localhost:3000.
+  - The backend server will be running on http://localhost:8000.
+  - The frontend server will be running on http://localhost:3000.
 ## Deploying the Application
-  -For deployment, ensure the CORS settings are correctly configured to allow the frontend and backend servers to communicate. You can configure CORS in the Django settings file.
+  - For deployment, ensure the CORS settings are correctly configured to allow the frontend and backend servers to communicate. You can configure CORS in the Django settings file.
 ## License
   This project is licensed under the MIT License. See the [LICENSE](https://opensource.org/licenses/MIT) file for details.
   
