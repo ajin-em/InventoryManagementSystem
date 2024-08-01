@@ -94,7 +94,7 @@ You can access the hosted application [here](https://inventory-management-system
 ## Deploying the Application
   -For deployment, ensure the CORS settings are correctly configured to allow the frontend and backend servers to communicate. You can configure CORS in the Django settings file.
 ## License
-  This project is licensed under the MIT License. See the LICENSE file for details.
+  This project is licensed under the MIT License. See the [LICENSE](https://opensource.org/licenses/MIT) file for details.
   
 
 
